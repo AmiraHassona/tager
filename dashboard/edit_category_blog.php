@@ -1,0 +1,45 @@
+<?php
+   session_start();
+   if(!isset($_SESSION['user'])){
+	 header("location:login.php");
+   }
+
+   include('partials/header.php');
+   include('partials/nav.php');
+   include('partials/sidebar.php');
+
+    $id= $_GET['id'];
+    $select_cate_row = "SELECT * FROM category_blog WHERE id = $id";
+    $rsl_cate_row = $conn->query($select_cate_row);
+    $cate_row=$rsl_cate_row ->fetch_assoc();
+
+?>		
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#">
+					<em class="fa fa-home"></em>
+				</a></li>
+				<li class="active">Dashboard</li>
+			</ol>
+		</div><!--/.row-->
+		<div class="row">
+			<div class="col-lg-12">
+				<h2 class="page-header">CATEGORY BLOG</h2>
+			</div>
+            <div class="col-lg-12">
+            <form method="POST" action="functions/edit_category_blog.php">
+             <input type="hidden" name="id" value="<?=$cate_row['id']?>">
+             <div class="form-group">
+             <label for="name">Category Blog Name</label>
+             <input type="text" class="form-control" id="name" placeholder="category name" name="cb_name" value="<?=$cate_row['cb_name']?>" >
+             </div>
+             <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            </div>
+		</div><!--/.row-->
+		
+	
+<?php
+   include('partials/footer.php');
+?>
